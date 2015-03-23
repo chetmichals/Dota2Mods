@@ -1,0 +1,9 @@
+dota_aram
+{
+	material materials/overviews/dota_aram.vmat
+	pos_x -7856
+	pos_y 8505
+	scale 16.000
+	zoom 1.050
+}
+

@@ -1,0 +1,50 @@
+"DOTAHeroes"
+{	
+	//=================================================================================================================
+	// HERO: Drow Ranger
+	//=================================================================================================================
+	"npc_dota_hero_drow_ranger_mod"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_drow_ranger"
+		"Model"						"models/heroes/drow/drow.mdl"			// Model.
+		"AttackRange"				"600"									// Range within a target can be attacked.
+		"MovementTurnRate"			"10"									// Turning rate.
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+												
+		"Ability1"					"ashe_frost_shot"						// Ability 1
+		"Ability2"					"ashe_volly"							// Ability 2
+		"Ability3"					"ashe_hawkshot"							// Ability 3
+		"Ability4"					"ashe_focus_crit"						// Ability 4
+		"Ability5"					"ashe_focus_passive"					// Ability 5
+		"Ability6"					"ashe_crystal_arrow"					// Ability 6
+		
+		
+		"AbilityLayout"				"5"
+	}
+	"npc_lol_hero_alistar"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"override_hero"				"npc_dota_hero_spirit_breaker"
+		"Model"						"models/heroes/spirit_breaker/spirit_breaker.mdl"			// Model.
+		"MovementTurnRate"			"10"									// Turning rate.
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+												
+		"Ability1"					"alistar_pulverize"						// Ability 1
+		"Ability2"					"alistar_test"						// Ability 2
+		"Ability3"					""							// Ability 3
+		"Ability4"					""						// Ability 4
+		"Ability5"					""					// Ability 5
+		"Ability6"					""					// Ability 6
+		
+		
+		"AbilityLayout"				"5"
+		
+	}
+}

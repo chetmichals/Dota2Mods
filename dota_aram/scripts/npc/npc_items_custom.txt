@@ -1,0 +1,32 @@
+"DOTAAbilities"
+{
+	"item_modifier_aram"
+		{
+			"ID"							"1010"
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+			"BaseClass"						"item_datadriven"
+	 
+			// Stats
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastRange"				"100"
+			"AbilityCastPoint"				"0.0"
+	 
+			// Item Info
+			//-------------------------------------------------------------------------------------------------------------
+	 
+			"Modifiers"
+			{
+				"ARAM_BUFF"
+				{
+					"TextureName" "item_greater_clarity" 
+					"Properties"
+					{
+						"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" "200"
+						"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" "1"
+					}
+				}
+			}
+	}
+}

@@ -1,0 +1,9 @@
+lichwars2
+{
+	material materials/overviews/lichwars2.vmat
+	pos_x -7292
+	pos_y 9092
+	scale 16.000
+	zoom 1.050
+}
+

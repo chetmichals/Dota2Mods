@@ -1,0 +1,800 @@
+// Dota Heroes File
+"DOTAAbilities"
+{
+	"Version"		"1"
+	
+	//-------------------
+	// Dummy stuff
+	//-------------------
+  
+	"flying_dummy_unit_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"dummy_unit"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+		  }
+		}
+	}	
+	//=================================================================================================================
+	// Ashe's Frost Arrows
+	//=================================================================================================================
+	"ashe_frost_shot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityTextureName"            "ashe_frost_shot"
+		
+		"precache"
+        {
+			"particle_folder"          	"particles/units/heroes/hero_drow"
+        }
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+		//"AbilityDuration"				"0.25 0.5 0.75 1.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"0 0 0 0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"8"
+
+		// Data-Driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_holdout_glacier_arrow_owner"
+			{
+				"Passive"               "1"
+				"IsHidden"				"1"
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"	"particles/units/heroes/hero_drow/drow_frost_arrow_model.vpcf"
+					"CastAttack"		"1"
+				}
+
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"	"%AbilityManaCost"
+					}
+					"FireSound"
+					{
+						"EffectName"			"Hero_DrowRanger.FrostArrows"
+						"Target"				"CASTER"
+					}
+				}
+
+				"OnOrbImpact"
+				{
+							"ApplyModifier"
+					{
+						"Target"			"TARGET"
+						"ModifierName"		"modifier_drow_ranger_frost_arrows_slow"
+						"Duration"			"%slow_duration"
+					}
+				}
+			}
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"0.1"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"knockback_distance"			"10 15 20 25"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"slow_duration"					"2"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"frost_arrows_movement_speed"	"-15 -20 -25 -30 -35"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ashe's Volly
+	//=================================================================================================================
+	"ashe_volly"
+	{
+		"AbilityBehavior"   "DOTA_ABILITY_BEHAVIOR_POINT"
+		"BaseClass"           "ability_datadriven"
+		"AbilityCastAnimation"      "ACT_DOTA_ATTACK"
+		"MaxLevel"          "5"
+		"AbilityTextureName"            "ashe_volley"
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityCastRange"        "1200"
+		"AbilityManaCost"         "60"
+		"AbilityCastPoint"        ".25"
+		"AbilityCooldown"         "16 13 10 7 4"
+		"AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		
+		"precache"
+        {
+			"particle_folder"          	"particles/econ/items/mirana/mirana_crescent_arrow"
+			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+        }
+		
+		"OnSpellStart"
+		{
+		  "RunScript"
+		  {
+			"ScriptFile"        "scripts/vscripts/wip.lua"
+			"Function"          "volly"
+			"Target"            "POINT"
+			"FixedDistance"                                     "1200"
+			"EffectName"                    "particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf"
+			"MoveSpeed"                             "2000"
+			"StartRadius"                   "16"
+			"EndRadius"                             "16"
+			"TargetTeams"                   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"TargetTypes"                   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+			"HasFrontalCone"                "1"
+			"ProvidesVision"                "1"
+			"VisionRadius"                  "400"
+		  }      
+		  "FireSound"
+			{
+					"EffectName"                    "Hero_Silencer.GlaivesOfWisdom"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+				"FireSound"
+				{
+						"EffectName"                    "Hero_Silencer.GlaivesOfWisdom.Damage"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"        "scripts/vscripts/wip.lua"
+					"Function"          "vollyHit"
+					"Target"            "TARGET"
+					//"Type"				"DAMAGE_TYPE_PHYSICAL"
+					"BonusDamage"		"%bonus_damage"
+				}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"						"40 50 60 70 80"
+			}
+		}	
+    }
+	//=================================================================================================================
+	// Ashe's Hawkshot
+	//=================================================================================================================
+	"ashe_hawkshot"
+	{
+		"AbilityBehavior"   "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"BaseClass"           "ability_datadriven"
+		"AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_2"
+		"MaxLevel"          "5"
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityCastRange"        "2500 3250 4000 4750 5500"
+		"AbilityManaCost"         "0"
+		"AbilityCastPoint"        ".25"
+		"AbilityCooldown"         "60 55 50 45 40"
+		"AbilityTextureName"            "ashe_hawkshot"
+		
+		"precache"
+        {
+			"particle_folder"			"particles/econ/items/windrunner/windrunner_weapon_sparrowhawk"
+			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+        }
+		"OnUpgrade"
+		{
+			"RemoveAbility"
+			{
+				"AbilityName"	"ashe_greed"
+				"Target"		"CASTER"
+			}
+			"AddAbility"
+			{
+				"AbilityName"	"ashe_greed"
+				"Target"		"CASTER"
+			}
+			"LevelUpAbility"
+			{
+				"AbilityName"	"ashe_greed"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+				"LinearProjectile"
+				{
+						"Target"                                "POINT"
+						"EffectName"                    "particles/econ/items/windrunner/windrunner_weapon_sparrowhawk/windrunner_spell_powershot_sparrowhawk.vpcf"
+						"MoveSpeed"                             "1000"
+						"StartRadius"                   "1"
+						"EndRadius"                             "1"
+						"TargetTeams"                   "DOTA_UNIT_TARGET_TEAM_NONE"
+						"TargetTypes"                   "DOTA_UNIT_TARGET_NONE"
+						"TargetFlags"                   "DOTA_UNIT_TARGET_FLAG_NONE"
+						"HasFrontalCone"                "0"
+						"ProvidesVision"                "1"
+						"VisionRadius"                  "500"
+				}
+				"FireSound"
+				{
+						"EffectName"                    "Hero_Clinkz.SearingArrow"
+				}
+		}
+		
+		"OnProjectileFinish"
+		{
+				"FireSound"
+				{
+						"EffectName"                    "Hero_Clinkz.DeathPact.Cast"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"        "scripts/vscripts/wip.lua"
+					"Function"          "hawkshotVision"
+					"Target"			"POINT"
+				}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"2500 3250 4000 4750 5500"
+			}		
+		}
+    }
+	//=================================================================================================================
+	// Ashe's Hawkshot Passive
+	//=================================================================================================================	
+	"ashe_greed"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"           		"alchemist_goblins_greed"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"          "1"
+
+		"precache"
+        {
+			"particle_folder"			"particles/units/heroes/hero_alchemist"			
+        }
+		
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold"			"3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_bonus_gold"		"3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold_cap"		"3"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ashe's Crystal Arrow
+	//=================================================================================================================	
+	"ashe_crystal_arrow"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"           		"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"            "ashe_enchanted_crystal_arrow"
+		
+		"precache"
+        {
+			"particle_folder"          	"particles/units/heroes/hero_mirana"
+			"particle_folder"          	"particles/econ/items/mirana/mirana_crescent_arrow"
+			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			
+        }
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				".25"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100 90 80"
+		"AbilityDuration"				"3.11 3.11 3.11 3.11"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"250 425 600"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/wip.lua"
+				"Function"          "crystal_arrow_start"
+				"Target"            "POINT"
+				"EffectName"                    "particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+				"MoveSpeed"                             "1800"
+				"StartRadius"                   "64"
+				"EndRadius"                     "64"
+				"TargetTeams"                   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"                   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+				"UnitTargetFlags" 				"DOTA_UNIT_TARGET_FLAG_NONE"
+				"HasFrontalCone"                "0"
+				"ProvidesVision"                "1"
+				"VisionRadius"                  "500"
+				"FixedDistance"					"99999" //Is be global
+			}
+			"FireSound"
+			{
+					"EffectName"                    "Hero_Mirana.ArrowCast"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{		
+			"DeleteOnHit"                   "true"
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/wip.lua"
+				"Function"          "crystal_arrow_hit"
+				"Target"            "TARGET"
+				"Damage"			"%damage"
+				//"Type"				"DAMAGE_TYPE_MAGICAL"
+			}
+			"FireSound"
+			{
+					"EffectName"                    "Hero_Mirana.ArrowImpact"
+			}
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Radius"	"%aoe_radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"Type" 		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%damage"
+			}
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Radius"	"%aoe_radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"ModifierName" 	"crystal_arrow_slow"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"crystal_arrow_slow"
+			{
+				"Duration" 		"3"
+				"Properties"
+				 {
+				   "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "-50"
+				 }
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe_radius"			"250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"125 212.5 300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"min_stun"				"1.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"max_stun"				"3.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"50"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ashe's Focus Passive
+	//=================================================================================================================	
+	"ashe_focus_passive"
+	{
+		"BaseClass"           	"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"          "1"
+				
+		"OnUpgrade"
+		{	
+			"RunScript"
+			{
+				"ScriptFile"        "scripts/vscripts/wip.lua"
+				"Function"          "FocusThinkerStarter"
+				"Target"            "caster"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"ashe_focus"
+			}
+		}
+		"Modifiers"
+		{
+			"ashe_focus"
+			{
+				"IsDebuff"				"0"
+				"IsHidden"				"1"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "scripts/vscripts/wip.lua"
+						"Function"          "ashe_attack_hit"
+						"Target"            "CASTER"
+					}
+				}
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "scripts/vscripts/wip.lua"
+						"Function"          "ashe_attack_start"
+						"Target"            "CASTER"
+					}
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ashe's Focus Criticle Hit
+	//=================================================================================================================	
+	"ashe_focus_crit"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"           	"juggernaut_blade_dance"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"          "1"
+		"AbilityTextureName"            "ashe_focus"
+		"OnCastbar"						"0"
+		"OnLearnbar"					"0"
+		
+		"precache"
+        {			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+			
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_dance_crit_mult"		"200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_dance_crit_chance"	"100"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Alistar's Pulverize
+	//=================================================================================================================	
+	"alistar_pulverize"
+	{
+		"BaseClass"           	"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"MaxLevel"          "5"
+		
+		"precache"
+        {
+			"particle_folder"          	"particles/units/heroes/hero_mirana"
+			
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_tidehunter.vsndevts"
+			
+        }
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"365"
+		"AbilityCastPoint"				"0" 						// Time before spell goes off when cast
+		
+		"OnSpellStart"
+		{
+			"Damage"
+			{
+				"Type"			"DAMAGE_TYPE_MAGICAL"
+				"Damage"		"%damage"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%impact_radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+				}
+			}
+			
+			"Knockback"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%impact_radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"Duration"	"1"
+				"Distance"	"0"
+				"Height"	"256"
+			}
+			"ApplyModifier"
+				{
+					"Target"
+					{
+						"Center"	"CASTER"
+						"Radius"	"%impact_radius"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					}
+					"ModifierName" 	"pulverize_stun"
+				}
+			"FireSound"
+			{
+					"EffectName"                    "tidehunter_tide_rival_04"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"pulverize_stun"
+			{
+				"Duration" 		"%stun_duration"
+				"States"
+				 {
+				   "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+				 }
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"impact_radius"			"365"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"60 105 150 195 240"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.5"
+			}
+		}
+	}
+	"alistar_headbutt_helper"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT "//| DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"BaseClass"						"faceless_void_time_walk"
+		"MaxLevel"          "1"
+		
+		"precache"
+        {
+			"particle_folder"          	"particles/units/heroes/hero_faceless_void/"
+			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			
+        }
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"635"
+		"AbilityCastPoint"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.25"	// mostly about the blink
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed_pct"	"0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_pct"		"0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"635"
+			}
+		}
+	}
+	"alistar_test"
+	{
+		"AbilityBehavior"   "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"BaseClass"           "ability_datadriven"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityCastAnimation"      "ACT_DOTA_ATTACK"
+		
+		"MaxLevel"          "5"
+		// Stats
+		//----------------------------------------------------------------
+		"AbilityCastRange"        "8000"
+		"AbilityManaCost"         "60"
+		"AbilityCastPoint"        ".25"
+		"AbilityCooldown"         "0"
+		"AbilityUnitDamageType"     "DAMAGE_TYPE_PHYSICAL"
+		
+		"precache"
+        {
+			"particle_folder"          	"particles/econ/items/mirana/mirana_crescent_arrow"
+			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_tidehunter.vsndevts"
+        }
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+					"EffectName"                    "tidehunter_tide_rival_04"
+			}
+			"RunScript"
+			{
+				"Target" 						"TARGET"
+				"ScriptFile"     				"scripts/vscripts/alistar.lua"
+				"Function"	 					"saveTarget"     
+				"Duration"						"1"
+			}
+			"ApplyMotionController"
+			{
+				"Target" 						"CASTER"
+				"ScriptFile"     				"scripts/vscripts/alistar.lua"
+				"HorizontalControlFunction"	 	"headbuttDash"     
+				"Duration"						"5"
+			}
+			"TrackingProjectile"
+			{
+				"Dodgeable" "0"
+			}
+		}
+		"Modifiers"
+		{
+			"headbutt_charge"
+			{
+				"Duration" 		"1"
+				"States"
+				 {
+				   "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+				 }
+			}
+		}
+	}
+}

@@ -1,0 +1,50 @@
+// Dota Heroes File
+// NOTE: This isn't for creating new heroes, this is for taking a currently existing hero as a template and overriding
+// the specified key-value combinations.  Use override_hero <hero_to_override> for this.
+"DOTAHeroes"
+{	
+	//=================================================================================================================
+	// HERO: Lich
+	//=================================================================================================================
+	"npc_dota_hero_lich_wars"
+	{
+		"override_hero"				"npc_dota_hero_lich"
+		"AbilityLayout"				"6"
+		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+		"StatusManaRegen"			"10"										// Mana regeneration rate.
+		"MovementSpeed"				"475"	
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackAcquisitionRange"	"1000"									// Range within a target can be acquired.
+		"AttackRange"				"750"									// Range within a target can be attacked.
+		"AttackRate"				"1.25"									// BAT
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"		"18"									// Base strength
+		"AttributeStrengthGain"		"2"									// Strength bonus per level.
+		"AttributeBaseIntelligence"	"20"									// Base intelligence
+		"AttributeIntelligenceGain"	"4"									// Intelligence bonus per level.
+		"AttributeBaseAgility"		"20"									// Base agility
+		"AttributeAgilityGain"		"2"										// Agility bonus per level.
+		
+		//-------------------------------------------------------------------------------------------------------------
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"				"lich_wars_nova"					// Ability 1
+		//"Ability2"				"lich_wars_icy_prison"				// Ability 2
+		//"Ability3"				"lich_war_suicide"					// Ability 3
+		"Ability2"				"lich_wars_mirror_image"			// Ability 2
+		"Ability3"				"lich_wars_ice_path"				// Ability 3
+		"Ability4"				"lich_wars_cold_feet"				// Ability 4
+		"Ability5"				"lich_wars_chain_frost"				// Ability 5
+		"Ability6"				"lich_wars_super_chain_frost"									// Ability 6 - Extra.
+		"Ability7"					""									// Ability 7 - Extra.
+		"Ability8"					""									// Ability 8 - Extra.
+		"Ability9"					""									// Ability 9 - Extra.
+	}
+}
